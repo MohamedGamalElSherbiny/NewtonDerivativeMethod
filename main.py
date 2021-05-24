@@ -1,5 +1,3 @@
-# CoLab Link:    https://colab.research.google.com/drive/1HIwtY57J1gWbydBHO4-zNU5oMHnr1nwR?usp=sharing
-
 from sympy import *
 x = Symbol("x")
 
@@ -19,6 +17,8 @@ def newton_method(outer_function, value):
         print(f"x({count}): x= {value}, F(x)= {first_derivative}, F''(x)= {second_derivative}")
         value = value - (first_derivative / second_derivative)
         if round(old_value, 6) == round(value, 6):
+            break
+        if get_derivative(outer_function, x, 1, value) == 0:
             break
         count += 1
     print(f"Final value of x is {round(value,5)}")
