@@ -1,7 +1,7 @@
 from sympy import *
 x = Symbol("x")
 
-def get_derivative(input_function, differentiation_element, number_of_derivatives, value):
+def get_derivative(input_function, differentiation_element, value, number_of_derivatives=1):
     """ A function that takes a function and a number_of_derivatives choosing the number of derivates with
     an element showing the differentiation element and the value of the element and
     returns the answer after substituting """
@@ -12,8 +12,8 @@ def newton_method(outer_function, value):
     count = 1
     while count < 100:
         old_value = value
-        first_derivative = get_derivative(outer_function, x, 1, value)
-        second_derivative = get_derivative(outer_function, x, 2, value)
+        first_derivative = get_derivative(outer_function, x, value)
+        second_derivative = get_derivative(outer_function, x, value, number_of_derivatives=2)
         print(f"x({count}): x= {value}, F(x)= {first_derivative}, F''(x)= {second_derivative}")
         value = value - (first_derivative / second_derivative)
         if round(old_value, 6) == round(value, 6):
