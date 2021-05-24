@@ -1,24 +1,26 @@
 from sympy import *
 x = Symbol("x")
 
-def get_derivative(input_function, differentiation_element, value, number_of_derivatives=1):
-    """ A function that takes a function and a number_of_derivatives choosing the number of derivates with
-    an element showing the differentiation element and the value of the element and
-    returns the answer after substituting """
-    inner_function = diff(input_function, differentiation_element, number_of_derivatives)
-    return inner_function.subs(differentiation_element, value).evalf()
+def substitution_function(input_function, variable_name, value):
+    """ A function that takes a function and the variable name with the required value
+     and returns the result of substitution"""
+    return input_function.subs(variable_name, value).evalf()
+
+def get_derivative(input_function, differentiation_element, number_of_derivatives=1):
+    """ A function that takes a function and the differentiation element and
+    returns the derivative function """
+    return diff(input_function, differentiation_element, number_of_derivatives)
 
 def newton_method(outer_function, value):
     count = 1
-    while count < 100:
+    first_derivative = get_derivative(outer_function, x)
+    f__x = substitution_function(first_derivative, x, value)
+    while f__x != 0:
         old_value = value
-        first_derivative = get_derivative(outer_function, x, value)
-        second_derivative = get_derivative(outer_function, x, value, number_of_derivatives=2)
-        print(f"x({count}): x= {value}, F(x)= {first_derivative}, F''(x)= {second_derivative}")
-        value = value - (first_derivative / second_derivative)
-        if round(old_value, 6) == round(value, 6):
-            break
-        if get_derivative(outer_function, x, 1, value) == 0:
+        f_x = substitution_function(outer_function, x, value)
+        f__x = substitution_function(first_derivative, x, value)
+        value = value - (f_x / f__x)
+        if round(old_value, 7) == round(value, 7):
             break
         count += 1
     print(f"Final value of x is {round(value,5)}")
